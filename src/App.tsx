@@ -1,35 +1,55 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import "./App.css";
+import { run } from "./speech/user-speech";
+import { cleanup } from "./speech/user-speech";
+import UserBubble from "./components/user-bubble";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [userSpeech, setUserSpeech] = useState<string[]>([]);
+  const [isRecording, setIsRecording] = useState(false);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
+    <div className="main">
+      <h1>Talking Head</h1>
+      <p className="subtitle">Voice-to-text transcription made simple</p>
+
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+        {isRecording ? (
+          <button className="record-button" onClick={() => {
+            setIsRecording(false);
+            cleanup();
+          }}>
+            Stop Recording
+          </button>
+        ) : (
+          <button className="record-button" onClick={() => {
+            setIsRecording(true);
+            run(userSpeech);
+          }}>
+            Start Recording
+          </button>
+        )}
+
+        <div className="transcripts-container">
+          {userSpeech.length === 0 ? (
+            <div className="empty-state">
+              Click "Start Recording" to begin transcribing your speech
+            </div>
+          ) : (
+            userSpeech.map((transcript, index) => (
+              <div key={index} className="transcript-item">
+                {transcript}
+              </div>
+            ))
+          )}
+        </div>
       </div>
+
       <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
+        Speak clearly for best transcription results
       </p>
-    </>
-  )
+    </div>
+  );
 }
 
-export default App
+export default App;
