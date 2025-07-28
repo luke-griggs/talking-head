@@ -59,6 +59,8 @@ export async function run(userTranscripts: string[], onTranscriptUpdate?: (trans
           if (onTranscriptUpdate) {
             onTranscriptUpdate([...userTranscripts]);
           }
+          // get model response and add to array
+          // tts and play the audio
         } else {
           console.log(`\r${transcript}`);
         }

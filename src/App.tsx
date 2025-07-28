@@ -3,6 +3,7 @@ import './styles/App.css';
 import { Layout } from './Layout';
 import { TranscriptionCard } from './components/TranscriptionCard';
 import { useTranscription } from './hooks/useTranscription';
+import Face from './components/face';
 
 function App() {
   const { transcripts, isRecording, startRecording, stopRecording } = useTranscription();
@@ -15,6 +16,7 @@ function App() {
         onStartRecording={startRecording}
         onStopRecording={stopRecording}
       />
+      <Face />
     </Layout>
   );
 }
