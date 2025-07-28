@@ -4,6 +4,7 @@ import { Layout } from './Layout';
 import { TranscriptionCard } from './components/TranscriptionCard';
 import { useTranscription } from './hooks/useTranscription';
 import Face from './components/face';
+import AsciiSelector from './components/AsciiSelector';
 
 function App() {
   const { transcripts, isRecording, startRecording, stopRecording } = useTranscription();
@@ -17,6 +18,7 @@ function App() {
         onStopRecording={stopRecording}
       />
       <Face />
+      <AsciiSelector />
     </Layout>
   );
 }
